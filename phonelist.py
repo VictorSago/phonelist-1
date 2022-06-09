@@ -1,5 +1,13 @@
-import sqlite3
-conn = sqlite3.connect("phone.db")
+#import sqlite3
+#conn = sqlite3.connect("phone.db")
+
+import psycopg2
+conn = psycopg2.connect(
+        host = "localhost",
+        database = "phone",
+        user = "phone",
+        password = "abc123"
+    )
 
 def read_phonelist(C):
     cur = C.cursor()
@@ -36,4 +44,9 @@ while True: ## REPL - Read Execute Program Loop
         delete_phone(conn, name)
     elif cmd == "QUIT":
         save_phonelist(conn)
-        exit()
+        #exit()
+        print("Committed!")
+        break
+
+print("-----Goodbye!------")
+

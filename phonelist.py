@@ -2,6 +2,8 @@
 #conn = sqlite3.connect("phone.db")
 
 import psycopg2
+
+# Global connection
 conn = psycopg2.connect(
         host = "localhost",
         database = "phone",
@@ -9,20 +11,24 @@ conn = psycopg2.connect(
         password = "abc123"
     )
 
+
 def read_phonelist(C):
     cur = C.cursor()
     cur.execute("SELECT * FROM phonelist;")
     rows = cur.fetchall()
     cur.close()
     return rows
+
 def add_phone(C, name, phone):
     cur = C.cursor()
     cur.execute(f"INSERT INTO phonelist VALUES ('{name}', '{phone}');")
     cur.close()
+    
 def delete_phone(C, name):
     cur = C.cursor()
     cur.execute(f"DELETE FROM phonelist WHERE name = '{name}';")
     cur.close()
+    
 def save_phonelist(C):
     cur = C.cursor()
     try:
@@ -32,13 +38,17 @@ def save_phonelist(C):
         print("No changes!")
     cur.close()
 
+def display_help():
+    print("Hello and welcome to the phone list, available commands:")
+    print("  help - display this list of commands")
+    print("  add - add a phone number")
+    print("  delete - delete a contact")
+    print("  list - list all phone numbers")
+    print("  save - commit all the changes to the database")
+    print("  quit - quit the program")
 
-print("Hello and welcome to the phone list, available commands:")
-print("  add - add a phone number")
-print("  delete - delete a contact")
-print("  list - list all phone numbers")
-print("  save - commit all the changes to the database")
-print("  quit - quit the program")
+
+display_help()
 
 while True: ## REPL - Read Execute Program Loop
     cmd = input("Command: ").strip().upper()
@@ -51,6 +61,8 @@ while True: ## REPL - Read Execute Program Loop
     elif cmd == "DELETE":
         name = input("  Name: ")
         delete_phone(conn, name)
+    elif cmd == "HELP":
+        display_help()
     elif cmd == "SAVE":
         print("Saving the changes...")
         save_phonelist(conn)

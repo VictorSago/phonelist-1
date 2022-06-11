@@ -54,6 +54,8 @@ while True: ## REPL - Read Execute Program Loop
         #exit()
         print("Committed!")
         break
+    else:
+        print(f"  Unknown command: {cmd}")
 
 print("-----Goodbye!------")
 

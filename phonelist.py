@@ -39,7 +39,7 @@ print("  list - list all phone numbers")
 print("  quit - quit the program")
 
 while True: ## REPL - Read Execute Program Loop
-    cmd = input("Command: ")
+    cmd = input("Command: ").strip().upper()
     if cmd == "LIST":
         print(read_phonelist(conn))
     elif cmd == "ADD":

@@ -27,6 +27,7 @@ def save_phonelist(C):
     cur = C.cursor()
     try:
         cur.execute("COMMIT;")
+        print("Committed!")
     except:
         print("No changes!")
     cur.close()
@@ -36,6 +37,7 @@ print("Hello and welcome to the phone list, available commands:")
 print("  add - add a phone number")
 print("  delete - delete a contact")
 print("  list - list all phone numbers")
+print("  save - commit all the changes to the database")
 print("  quit - quit the program")
 
 while True: ## REPL - Read Execute Program Loop
@@ -49,10 +51,14 @@ while True: ## REPL - Read Execute Program Loop
     elif cmd == "DELETE":
         name = input("  Name: ")
         delete_phone(conn, name)
+    elif cmd == "SAVE":
+        print("Saving the changes...")
+        save_phonelist(conn)
     elif cmd == "QUIT":
+        print("Saving the changes...")
         save_phonelist(conn)
         #exit()
-        print("Committed!")
+        print("Quitting...")
         break
     else:
         print(f"  Unknown command: {cmd}")
